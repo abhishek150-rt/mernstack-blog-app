@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Fontawesome -->
+  <script src="https://kit.fontawesome.com/42a182743f.js" crossorigin="anonymous"></script>
+  <!-- Google font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style/postDetails.css" />
+  <title>Post</title>
+</head>
+
+<body>
+  <!-- nav -->
+  <%- include("../partials/navbar.ejs") %>
+  <!-- content -->
+  <section class="container-flex" style="position: relative;">
+    <!-- main -->
+    <main>
+      <article class="post-content-main">
+        <img src=<%=response?.image%> alt="post-image" class="post-image" />
+        <div class="post-info">
+
+          <span class="post-date">
+            <i class="far fa-calendar-alt"></i>
+            <time datetime="2020-01-01">
+              <%=formatDate(response?.createdAt)%>
+            </time>
+          </span>
+          <div style="display: flex; width: 60px; justify-content: space-between;">
+            <% if (response?.author?._id==loggedInUser) { %>
+            <!-- update post icon -->
+            <a href="/api/v1/posts/get-form-update/<%=response._id%>" class="comment-update">
+              <i class="fas fa-edit"></i>
+            </a>
+            <!-- delete post icon -->
+
+            <form action="/api/v1/posts/delete/<%=response._id%>/?_method=delete" method="post">
+              <button type="submit" value="submit" style="cursor: pointer; border: none;">
+
+                <i class="fas fa-trash-alt" style="color: red; margin: 0px 10px;"></i>
+              </button>
+            </form>
+            <% } %>
+
+          </div>
+        </div>
+
+        <div style="margin-top: 10px;">
+          <h1 class="post-title">
+            <%=response?.title%>
+          </h1>
+          <small class="post-description">
+            <%=response?.description%>
+          </small>
+        </div>
+      </article>
+      <!-- Comment form -->
+      <% if(loggedInUser){%>
+      <div class="comment-form">
+        <h2>Leave a comment</h2>
+
+        <form action="/api/v1/comments/create/<%=response?.id%>" method="post">
+          <div class="form-group" style="border: 2px solid red; display: flex; align-items: flex-end;">
+            <textarea type="text" name="message" id="name" style="height: 250px; width: 800px;">
+
+                  </textarea>
+            <button type="submit" class="btn">Submit</button>
+          </div>
+
+        </form>
+
+        <% if (error) { %>
+        <small class="error" style="color: red; font-size: 14px;">
+          <i class="fas fa-exclamation-circle"></i>
+          <%=error%>
+        </small>
+        <% } else { %>
+        <span></span>
+        <% } %>
+      </div>
+      <% } %>
+
+      <!-- comments -->
+      <div class="comments">
+        <h2>Comments</h2>
+        <% if (response?.comments?.length> 0) { %>
+
+        <% for(let i=0; i < response.comments.length; i++) { %>
+
+        <div class="comment">
+          <div class="comment-info">
+            <img src="<%= response?.comments[i]?.user?.profileImage
+                       || 'https://cdn.icon-icons.com/icons2/2468/PNG/512/user_icon_149329.png' %>" alt="loggedInUser" class="comment-author-image" />
+
+            <div class="comment-author">
+              <h4><%=response?.comments[i]?.user?.fullName%></h4>
+
+              <span>
+                <%=formatDate(response.comments[i].createdAt)%>
+              </span>
+            </div>
+          </div>
+          <div class="comment-body">
+            <small>
+              <%= response.comments[i].message %>
+            </small>
+            <!-- delete/update icon -->
+            <% if (loggedInUser == response?.comments[i]?.user?._id) { %>
+            <div class="comment-actions">
+              <a href="/api/v1/comments//getById/<%= response?.comments[i]._id%>/<%= response._id %>" class="comment-update" style="color: rgb(0, 115, 255);">
+                <i class="fas fa-edit"></i>
+              </a>
+              <form action="/api/v1/comments/delete/<%= response.comments[i].id %>/?_method=DELETE&postId=<%= response._id %>" method="post">
+                <button type="submit" style="border: none; color: red;">
+                  <i class="fas fa-trash-alt" style="font-size: 20px; cursor: pointer;"></i>
+                </button>
+              </form>
+            </div>
+            <% } %>
+
+          </div>
+        </div>
+        <% } %>
+
+        <% } else { %>
+        <p>No comments.</p>
+        <% } %>
+      </div>
+    </main>
+    <!-- aside -->
+    <aside class="sidebar" style="position: absolute; top: 0 ; right: 0;">
+      <div class="about-me">
+        <h2>About The Author</h2>
+        <img class="avatar" src=<%=response?.author?.profileImage%> alt="Author" />
+
+        <h2 class="about-name">
+          <%=response?.author?.fullName%>
+        </h2>
+        <p>Blogger</p>
+        <small class="about-me-bio">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum
+          adipisci eligendi nobis itaque ex? Veniam tempore itaque cumque
+          fugiat iusto voluptatibus odit inventore dolorem numquam maxime,
+          repellendus labore corrupti expedita?
+        </small>
+      </div>
+
+
+    </aside>
+  </section>
+  <!-- footer -->
+  <%- include("../partials/footer.ejs") %>
+</body>
+
+</html>

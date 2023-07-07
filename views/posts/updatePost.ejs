@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Fontawesome -->
+  <script src="https://kit.fontawesome.com/42a182743f.js" crossorigin="anonymous"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="/style/form.css" />
+  <title>Post Update</title>
+</head>
+
+<body>
+  <!-- nav -->
+  <%-include('../partials/navbar.ejs') %>
+    <div class="form-container">
+      <!-- icon -->
+      <h1>
+        Update Post
+        <!-- add icon -->
+        <i class="fas fa-plus"></i>
+      </h1>
+
+      <form enctype="multipart/form-data" action="/api/v1/posts/update/<%=formData?._id%>/?_method=PUT" method="POST">
+        <!-- Post Title -->
+        <div class="input-wrapper">
+          <label for="name">Post Title</label>
+          <input type="text" name="title" id="name" value="<%=formData?.title%>" />
+          <!-- err -->
+        </div>
+
+        <!-- Category -->
+        <div class="input-wrapper">
+          <label for="category">Category</label>
+          <select name="category" id="category">
+            <option value="sports" <%=formData?.category==='sports' ? 'selected' : '' %>>Sports</option>
+            <option value="reactjs" <%=formData?.category==='reactjs' ? 'selected' : '' %>>Reactjs</option>
+            <option value="expressjs" <%=formData?.category==='expressjs' ? 'selected' : '' %>>Expressjs</option>
+            <option value="html" <%=formData?.category==='html' ? 'selected' : '' %>>HTML</option>
+            <option value="webdev" <%=formData?.category==='webdev' ? 'selected' : '' %>>Web Development</option>
+            <option value="others" <%=formData?.category==='others' ? 'selected' : '' %>>Others</option>
+          </select>
+
+          <!-- err -->
+        </div>
+        <div class="input-wrapper">
+          <!-- Post Body -->
+          <label for="body">Description</label>
+
+          <textarea name="description" id="body" cols="30" rows="10"><%=formData?.description%></textarea>
+        </div>
+        <!-- Post Image -->
+        <div class="input-wrapper">
+          <label for="image">Post Image</label>
+          <input type="file" name="image" id="image" value=<%=formData?.image%>/>
+          <!-- err -->
+        </div>
+        <img src=<%=formData?.image%> alt="" name="image">
+        <button type="submit">Create</button>
+      </form>
+      <%if(error){%>
+        <small class="error">
+          <i class="fas fa-exclamation-circle"></i>
+          <%=error%>
+        </small>
+        <%}%>
+    </div>
+    <!-- footer -->
+    <%-include('../partials/footer.ejs') %>
+</body>
+
+</html>

@@ -1,0 +1,13 @@
+<!-- error.ejs -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Error</title>
+  </head>
+  <body>
+    <%-include("/partials/navbar.ejs")%>
+    <h1>Error <%= errorCode %></h1>
+    <p><%= errorMessage %></p>
+    <%-include("/partials/footer.ejs")%>
+  </body>
+</html>

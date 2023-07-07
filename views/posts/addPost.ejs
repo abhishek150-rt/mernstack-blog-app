@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Fontawesome -->
+  <script src="https://kit.fontawesome.com/42a182743f.js" crossorigin="anonymous"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="/style/form.css" />
+  <title>Create Post</title>
+</head>
+
+<body>
+
+  <%- include("../partials/navbar.ejs") %>
+  <div class="form-container">
+    <!-- icon -->
+    <h1>
+      Add Post
+
+      <!-- add icon -->
+      <i class="fas fa-plus"></i>
+    </h1>
+
+    <form action="/api/v1/posts/create" method="POST" enctype="multipart/form-data">
+      <!-- Post Title -->
+      <div class="input-wrapper">
+        <label for="name">Post Title</label>
+        <input type="text" name="title" id="name" />
+        <!-- err -->
+      </div>
+
+      <!-- Category -->
+      <div class="input-wrapper">
+        <label for="category">Category</label>
+        <select name="category" id="category">
+          <option value="sports">Sports</option>
+          <option value="reactjs">Reactjs</option>
+          <option value="expressjs">Expressjs</option>
+          <option value="html">HTML</option>
+          <option value="webdev">Web Development</option>
+          <option value="others">Others</option>
+        </select>
+        <!-- err -->
+      </div>
+      <div class="input-wrapper">
+        <!-- Post Body -->
+        <label for="body">Post Body</label>
+        <textarea name="description" id="body" cols="30" rows="10"></textarea>
+        <!-- err -->
+      </div>
+      <!-- Post Image -->
+      <div class="input-wrapper">
+        <label for="image">Post Image</label>
+        <input type="file" name="image" id="image" />
+        <!-- err -->
+      </div>
+
+      <button type="submit">Create</button>
+    </form>
+    <% if (data && data.type=="error") { %>
+    <small class="error">
+      <i class="fas fa-exclamation-circle"></i>
+      <%= data.error %>
+
+    </small>
+
+    <% } else if(data && data.type=="success") { %>
+    <small style="color: green;">
+      <h4>
+        <i class="fa-solid fa-check"></i>
+        <%= data.error %>
+      </h4>
+    </small>
+    <% } %>
+  </div>
+  <%- include("../partials/footer.ejs") %>
+</body>
+
+</html>

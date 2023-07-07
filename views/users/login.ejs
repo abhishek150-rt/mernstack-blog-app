@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- CSS -->
+    <link rel="stylesheet" href="/style/form.css" />
+    <title>Login</title>
+  </head>
+  <body>
+    <%- include("../partials/navbar.ejs") %>
+
+    <div class="form-container">
+      <!-- icon -->
+      <h1>Login Into Your Account</h1>
+      <p>
+        <!-- lock icon -->
+        <i class="fas fa-lock"></i>
+      </p>
+
+      <form action="/api/v1/users/login" method="POST">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" value="<%= formData.email || '' %>"/>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" value="<%= formData.password || '' %>"/>
+
+        <button type="submit">Login</button>
+
+        <p>Don't have an account? <a href="/register">Register</a></p>
+      </form>
+
+      <% if (error) { %>
+      <small class="error">
+        <i class="fas fa-exclamation-circle"></i>
+        <%=error%>
+      </small>
+      <% } else { %>
+      <span></span>
+      <% } %>
+    </div>
+    <%- include("../partials/footer.ejs") %>
+  </body>
+</html>

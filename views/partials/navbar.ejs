@@ -1,0 +1,60 @@
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- Fontawesome -->
+<script
+  src="https://kit.fontawesome.com/42a182743f.js"
+  crossorigin="anonymous"
+></script>
+<!-- Google font -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Roboto:wght@400;500&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="/style/style.css" />
+<nav>
+  <div>
+    <img src="/images/logo.png" alt="logo" />
+  </div>
+
+  <ul>
+    <% if (userId) { %>
+    <li>
+      <a href="/api/v1/users/">Home</a>
+    </li>
+    <li>
+      <a href="/">Posts</a>
+    </li>
+
+    <li>
+      <a href="/api/v1/users/profile">Profile</a>
+    </li>
+    <li>
+      <a href="/api/v1/Posts/addNewPost" style="background-color: green;" class="create-post-btn">New Post</a>
+    </li>
+    <li>
+      <!-- <a href="/api/v1/users/logout" class="create-post-btn">Logout</a> -->
+      <!-- <button type="submit" actio></button> -->
+      <form action="/api/v1/users/logout" method="POST">
+        <button type="submit" class="create-post-btn">Logout</button>
+      </form>
+    </li>
+    
+    <% } else { %>
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href="/">Posts</a>
+    </li>
+    <li>
+      <a href="/api/v1/users/login">Login</a>
+    </li>
+    <li>
+      <a href="/api/v1/users/register">Register</a>
+    </li>
+    <% } %>
+  </ul>
+</nav>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- CSS -->
+    <link rel="stylesheet" href="/style/form.css" />
+    <title>Register</title>
+  </head>
+  <body>
+    <%- include("../partials/navbar.ejs") %>
+    <div class="form-container">
+      <!-- icon -->
+      
+      <h1>
+        Register
+        <i class="fas fa-user-plus"></i>
+      </h1>
+      <form action="/api/v1/users/register" method="POST"
+      
+      >
+        <!-- full name -->
+        <label for="name">Full Name</label>
+        <input type="text" name="fullName" id="fullName" value="<%= formData.fullName || '' %>" />
+        <!-- email -->
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" value="<%= formData.email || '' %>"/>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" value="<%= formData.password || '' %>" />
+
+        <button type="submit">Register</button>
+
+        <p>Already have an account? <a href="/login">Login</a></p>
+      </form>
+
+     
+      <% if (error) { %>
+        <small class="error">
+          <i class="fas fa-exclamation-circle"></i>
+          <%=error%>
+        </small>
+        <% } else { %>
+        <span></span>
+        <% } %>
+
+      
+
+
+    </div>
+    <%- include("../partials/footer.ejs") %>
+  </body>
+</html>

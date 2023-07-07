@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/style/profile.css" />
+  <link rel="stylesheet" href="/style/style.css" />
+  <title>Profile</title>
+</head>
+
+<body>
+  <%- include("../partials/navbar.ejs") %>
+
+    <% if (userId) { %>
+      <div class="profile-container">
+        <header style="background-image: url(<%=user?.coverImage%>)">
+          
+          <div class="icons-container" style="position: absolute; right: 0; bottom: 0;">
+            <p>
+              <a href="upload-cover-photo" style="text-decoration: none; color: blue;">
+                <i class="fas fa-camera upload-btn" style="color: blue;"> </i>
+              </a>
+            </p>
+          </div>
+
+        </header>
+
+        <!-- profile image -->
+        <div class="profile-img">
+          <img src=<%=user?.profileImage%>
+          alt="profile image"
+          />
+          <!-- upload profile image icon -->
+
+          <a href="upload-profile-photo">
+            <i class="fas fa-camera upload-btn"> </i>
+          </a>
+
+        </div>
+        <!-- personal details -->
+        <div class="personal-container">
+          <p style="position: absolute; top: 0; right: 10px;">
+            <a href="/api/v1/users/profile/public">
+              <i class="fas fa-edit" style="color: red;"></i>
+            </a>
+          </p>
+          <div class="details-wrapper">
+            <div class="details">
+              <i class="fas fa-user"></i>
+              <p>Name: <%=user?.fullName%>
+              </p>
+            </div>
+            <div class="details">
+              <i class="fas fa-envelope"></i>
+              <p>Email: <%=user?.email%>
+              </p>
+            </div>
+
+            <div class="details">
+              <i class="fas fa-calendar"></i>
+              <p>Date Joined: <%= formatDate(user?.createdAt) %>
+
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="latest-post-title">
+        <!-- Icon -->
+        <i class="fas fa-book-open"></i>
+        <h1>Latest Posts (<%=user?.posts.length %>)</h1>
+
+      </div>
+
+      <!-- content -->
+      <section class="container-flex">
+
+        <% if (user?.posts.length> 0) { %>
+          <% for (let i=0; i < user?.posts.length; i++) { %>
+            <article class="post-content">
+
+              <img src=<%=user?.posts[i]?.image%> alt="profile picture" class="post-image" />
+              <p class="post-info">
+                <span class="post-author">
+                  <i class="fas fa-user"></i>
+                  <a href="#">
+                    <%= user?.fullName%>
+                  </a>
+                </span>
+                <span class="post-date">
+                  <i class="far fa-calendar-alt"></i>
+                  <time datetime="2020-01-01">
+                    <%= user?.posts[i].createdAt.toLocaleDateString()%>
+                  </time>
+                </span>
+              </p>
+              <h1 class="post-title">
+                <%= user?.posts[i].title%>
+              </h1>
+
+              <small>
+                <%=truncatePost(user?.posts[i].description)%>
+              </small>
+
+              <div class="post-category">
+                <span>Category: <%= user?.posts[i].category%></span>
+              </div>
+              <!-- <a href="/" class="post-read-more">Continue Reading...</a> -->
+              <a href="/api/v1/posts/getById/<%=user?.posts[i]._id%>" class="post-read-more">Continue Reading...</a>
+            </article>
+            <% } %>
+              <%} else {%>
+                
+                <div  style="text-align: center; width: 100%;">
+                  <p>You don't have any post yet.</p>
+                </div>
+                <% } %>
+
+
+
+
+
+      </section>
+      <% } else { %>
+        <div style="display: flex; justify-content: center; align-items: center; height: 500px;">Your're not logged in
+          access profile</div>
+        <% } %>
+          <!-- footer -->
+          <%- include("../partials/footer.ejs") %>
+</body>
+
+</html>
+
+<!-- 
+<p>
+  <i style="color: yellow" class="fa-solid fa-key fas"></i>
+</p> -->

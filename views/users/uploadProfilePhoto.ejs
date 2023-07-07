@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- CSS -->
+    <link rel="stylesheet" href="/style/uploadPhoto.css" />
+    <title>Upload Profile Photo</title>
+  </head>
+  <body>
+    <%- include("../partials/navbar.ejs") %>
+    <div class="form-container">
+      <!-- icon -->
+      <h1>Upload Profile photo</h1>
+      <p>
+        <!-- upload icon -->
+        <% if (data && data.type=="error") { %>
+          <small class="error">
+           
+          
+              <i class="fas fa-exclamation-circle"></i>
+              <%= data.error %>
+           
+          </small>
+    
+          <% } else if(data && data.type=="success") { %>
+            <small style="color: green;">
+            
+              <h4>
+                <i class="fa-solid fa-check"></i>
+                <%= data.error %>
+              </h4>
+            </small>
+          <% } %>
+      </p>
+
+    
+
+      <form
+        action="/api/v1/users/profile-photo-upload?_method=PUT"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <!-- <label for="email">Select Imgae</label> -->
+        <input type="file" name="image" id="image" />
+        <button type="submit">
+          <i class="fas fa-upload"></i>
+        </button>
+      </form>
+    </div>
+    <%- include("../partials/footer.ejs") %>
+  </body>
+</html>
